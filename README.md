@@ -1,2 +1,2 @@
 # PatienceQi.github.io
-qjx的个人简历网站
+戚境轩的个人简历网站
