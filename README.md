@@ -2,6 +2,7 @@
 
 A static, bilingual personal website for Qi Jingxuan. The site is built with vanilla HTML, CSS, and JavaScript and can be deployed directly on GitHub Pages using the "Static HTML" workflow template.
 
+> Binary assets (PNG/JPG/ICO/fonts) are intentionally omitted to satisfy Codex PR constraints. Replace with real assets in a follow-up manual commit after merge.
 
 ## Preview locally
 
@@ -42,4 +43,3 @@ The `/zh` and `/en` directories hold localized pages. Shared assets live under `
 - Email obfuscation and dual-address reveal logic
 - BibTeX copy-to-clipboard buttons with toast feedback
 
-> Binary assets (PNG/JPG/ICO/fonts) are intentionally omitted to satisfy Codex PR constraints. Replace with real assets in a follow-up manual commit after merge.
