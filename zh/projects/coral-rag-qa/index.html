@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CORAL RAG QA | 项目 | 戚境轩</title>
+  <meta name="description" content="冷启动场景下的检索增强问答系统，支持多源索引与消歧。">
+  <meta property="og:title" content="CORAL RAG QA">
+  <meta property="og:description" content="冷启动场景下的检索增强问答系统，支持多源索引与消歧。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://example.com/zh/projects/coral-rag-qa/">
+  <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/motion.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a class="logo" href="/zh/" aria-label="Qi Jingxuan home">
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <rect width="48" height="48" rx="12" fill="url(#grad-rag-zh)" />
+          <defs>
+            <linearGradient id="grad-rag-zh" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="100%" stop-color="#0ea5e9" />
+            </linearGradient>
+          </defs>
+          <path d="M16 32c8 0 12-6 12-12s-4-12-12-12v6c4 0 6 3 6 6s-2 6-6 6v6z" fill="#0f172a" opacity="0.85" />
+          <path d="M32 16c-4 0-6 3-6 6s2 6 6 6v6c-8 0-12-6-12-12s4-12 12-12v6z" fill="#0f172a" opacity="0.6" />
+        </svg>
+        <span>Qi Jingxuan</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/zh/about/">关于</a>
+        <a href="/zh/projects/" aria-current="page">项目</a>
+        <a href="/zh/publications/">论文</a>
+        <a href="/zh/contact/">联系</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="lang-toggle" type="button" aria-label="切换语言">EN</button>
+        <a class="icon-button" href="https://github.com/PatienceQi" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.19 1.78 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.88 10.88 0 0 1 2.87-.39c.97 0 1.95.13 2.87.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.42.36.77 1.06.77 2.14 0 1.55-.02 2.8-.02 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="hero fade-up">
+      <div class="container">
+        <h1>CORAL RAG QA</h1>
+        <p class="tagline">面向冷启动企业知识库的检索增强问答系统。</p>
+      </div>
+    </section>
+    <section class="fade-up delay-1">
+      <div class="container">
+        <h2 class="section-title">问题</h2>
+        <article>
+          <p>客户提供的知识库分散在 CMS、工单与 PDF 中，缺乏统一结构。上线周期被要求控制在两周以内，同时要支持多轮追问与敏感词审计。</p>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up delay-2">
+      <div class="container">
+        <h2 class="section-title">方法</h2>
+        <article>
+          <p>构建 CORAL 流水线：收集（Collect）、组织（Organize）、检索（Retrieve）、回答（Answer）、学习（Learn）。通过流水线驱动的 ETL 自动生成向量索引，并在回答阶段融合规则库进行消歧。</p>
+          <figure class="project-cover">
+            <svg class="media-placeholder" viewBox="0 0 640 400" role="img" aria-label="CORAL RAG 流水线示意插图" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="ragGradientZh" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0f172a" />
+                  <stop offset="100%" stop-color="#38bdf8" />
+                </linearGradient>
+                <linearGradient id="ragAccentZh" x1="0%" y1="50%" x2="100%" y2="50%">
+                  <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#bae6fd" stop-opacity="0.7" />
+                </linearGradient>
+              </defs>
+              <rect width="640" height="400" rx="32" fill="url(#ragGradientZh)" />
+              <rect x="60" y="96" width="220" height="120" rx="24" fill="url(#ragAccentZh)" />
+              <rect x="360" y="96" width="220" height="120" rx="24" fill="#0f172a" opacity="0.55" />
+              <path d="M300 156h40" stroke="#bae6fd" stroke-width="12" stroke-linecap="round" />
+              <path d="M320 136v40" stroke="#bae6fd" stroke-width="12" stroke-linecap="round" />
+              <rect x="120" y="264" width="400" height="52" rx="16" fill="#0f172a" opacity="0.45" />
+              <text x="540" y="336" text-anchor="end" font-size="72" fill="#f1f5f9">Qi</text>
+            </svg>
+          </figure>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up delay-3">
+      <div class="container">
+        <h2 class="section-title">结果</h2>
+        <article>
+          <table>
+            <thead>
+              <tr>
+                <th>指标</th>
+                <th>上线前</th>
+                <th>上线后</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>首次响应时间</td>
+                <td>12.8 秒</td>
+                <td>3.6 秒</td>
+              </tr>
+              <tr>
+                <td>正确率</td>
+                <td>68%</td>
+                <td>87%</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up">
+      <div class="container">
+        <h2 class="section-title">职责</h2>
+        <article>
+          <ul>
+            <li>搭建向量索引自动化流水线，支持 5 种文档格式。</li>
+            <li>实现多路召回策略，结合语义与关键词检索以提升覆盖。</li>
+            <li>设计敏感词审计与人工纠错流程，确保可控上线。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up">
+      <div class="container">
+        <h2 class="section-title">链接</h2>
+        <article class="publication-actions">
+          <a class="btn" href="https://github.com/PatienceQi" target="_blank" rel="noopener">GitHub</a>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container footer">
+      <span>© <span data-current-year></span> Qi Jingxuan</span>
+      <div class="nav-actions">
+        <a class="icon-button" href="https://github.com/PatienceQi" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.19 1.78 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.88 10.88 0 0 1 2.87-.39c.97 0 1.95.13 2.87.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.42.36.77 1.06.77 2.14 0 1.55-.02 2.8-.02 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <button class="back-to-top" type="button" aria-label="返回顶部">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 5 4 13h5v6h6v-6h5z"/></svg>
+  </button>
+  <script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>
