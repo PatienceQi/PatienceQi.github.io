@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hybrid Precision Runtime | Projects | Qi Jingxuan</title>
+  <meta name="description" content="Hybrid precision runtime that balances throughput and accuracy for inference services.">
+  <meta property="og:title" content="Hybrid Precision Runtime">
+  <meta property="og:description" content="Hybrid precision runtime that balances throughput and accuracy for inference services.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://example.com/en/projects/hybrid-precision/">
+  <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/motion.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a class="logo" href="/en/" aria-label="Qi Jingxuan home">
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <rect width="48" height="48" rx="12" fill="url(#grad-hybrid-en)" />
+          <defs>
+            <linearGradient id="grad-hybrid-en" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="100%" stop-color="#0ea5e9" />
+            </linearGradient>
+          </defs>
+          <path d="M16 32c8 0 12-6 12-12s-4-12-12-12v6c4 0 6 3 6 6s-2 6-6 6v6z" fill="#0f172a" opacity="0.85" />
+          <path d="M32 16c-4 0-6 3-6 6s2 6 6 6v6c-8 0-12-6-12-12s4-12 12-12v6z" fill="#0f172a" opacity="0.6" />
+        </svg>
+        <span>Qi Jingxuan</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/en/about/">About</a>
+        <a href="/en/projects/" aria-current="page">Projects</a>
+        <a href="/en/publications/">Publications</a>
+        <a href="/en/contact/">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="lang-toggle" type="button" aria-label="Switch language">ZH</button>
+        <a class="icon-button" href="https://github.com/PatienceQi" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.19 1.78 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.88 10.88 0 0 1 2.87-.39c.97 0 1.95.13 2.87.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.42.36.77 1.06.77 2.14 0 1.55-.02 2.8-.02 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="hero fade-up">
+      <div class="container">
+        <h1>Hybrid Precision Runtime</h1>
+        <p class="tagline">Dynamic precision orchestration for inference services, keeping accuracy while unlocking higher throughput.</p>
+      </div>
+    </section>
+    <section class="fade-up delay-1">
+      <div class="container">
+        <h2 class="section-title">Problem</h2>
+        <article>
+          <p>Shared GPU clusters often run models with conflicting precision requirements. Aggressive mixed-precision settings can destabilize sensitive operators, while conservative presets throttle throughput. The team needed a runtime that learns operator sensitivity on the fly and plugs into existing observability tooling.</p>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up delay-2">
+      <div class="container">
+        <h2 class="section-title">Approach</h2>
+        <article>
+          <p>I introduced a three-stage pipeline: static graph analysis, online operator probing, and feedback-driven refinement. Custom MindSpore hooks capture tensor variance and write cacheable hints into Redis for subsequent batches.</p>
+          <figure class="project-cover">
+            <svg class="media-placeholder" viewBox="0 0 640 400" role="img" aria-label="Hybrid Precision Runtime architecture illustration" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="hpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#1d4ed8" />
+                  <stop offset="100%" stop-color="#0ea5e9" />
+                </linearGradient>
+                <linearGradient id="hpAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#bae6fd" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.8" />
+                </linearGradient>
+              </defs>
+              <rect width="640" height="400" rx="32" fill="url(#hpGradient)" />
+              <rect x="48" y="70" width="544" height="180" rx="28" fill="#0f172a" opacity="0.65" />
+              <rect x="104" y="118" width="180" height="84" rx="18" fill="url(#hpAccent)" opacity="0.9" />
+              <rect x="320" y="118" width="204" height="84" rx="18" fill="#0f172a" opacity="0.55" />
+              <rect x="104" y="276" width="432" height="56" rx="18" fill="#bae6fd" opacity="0.35" />
+              <text x="560" y="340" text-anchor="end" font-size="72" fill="#e0f2fe">Qi</text>
+            </svg>
+          </figure>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up delay-3">
+      <div class="container">
+        <h2 class="section-title">Results</h2>
+        <article>
+          <table>
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Baseline latency</th>
+                <th>Optimized latency</th>
+                <th>Accuracy delta</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>BERT-Base</td>
+                <td>68 ms</td>
+                <td>49 ms</td>
+                <td>&lt;0.1%</td>
+              </tr>
+              <tr>
+                <td>GPT-6B</td>
+                <td>142 ms</td>
+                <td>96 ms</td>
+                <td>&lt;0.2%</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up">
+      <div class="container">
+        <h2 class="section-title">Role</h2>
+        <article>
+          <ul>
+            <li>Designed and implemented the precision scheduler across MindSpore and TensorFlow runtimes.</li>
+            <li>Built the online probing service and Prometheus integration for drift alerts.</li>
+            <li>Delivered rollout playbooks that enabled production launch within four days.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up">
+      <div class="container">
+        <h2 class="section-title">Links</h2>
+        <article class="publication-actions">
+          <a class="btn" href="https://github.com/PatienceQi" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn secondary" href="https://example.com/hybrid-report" target="_blank" rel="noopener">Technical report</a>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container footer">
+      <span>© <span data-current-year></span> Qi Jingxuan</span>
+      <div class="nav-actions">
+        <a class="icon-button" href="https://github.com/PatienceQi" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.19 1.78 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.88 10.88 0 0 1 2.87-.39c.97 0 1.95.13 2.87.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.42.36.77 1.06.77 2.14 0 1.55-.02 2.8-.02 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <button class="back-to-top" type="button" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 5 4 13h5v6h6v-6h5z"/></svg>
+  </button>
+  <script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>
