@@ -1,0 +1,172 @@
+{
+  "timestamp": "2025-11-09T15:01:56+08:00",
+  "project_name": "PatienceQi.github.io",
+  "project_summary": "静态个人网站项目（增量更新）",
+  "scan_metadata": {
+    "total_files_estimated": 35,
+    "files_scanned": 34,
+    "coverage_percentage": 97.1,
+    "truncated": false,
+    "ignore_rules": "默认规则（无 .gitignore 文件）：node_modules/**,.git/**,.github/**,dist/**,build/**,.next/**,__pycache__/**,*.lock,*.log,*.bin,*.pdf,*.png,*.jpg,*.jpeg,*.gif,*.mp4,*.zip,*.tar,*.gz",
+    "incremental_scan": true,
+    "previous_timestamp": "2025-11-09T14:53:49+08:00",
+    "newly_scanned_files": 4
+  },
+  "modules": [
+    {
+      "path": "/zh/",
+      "name": "中文版内容模块",
+      "language": "HTML/CSS/JS",
+      "responsibility": "中文版页面内容（首页、关于、项目、论文、联系）",
+      "entry_points": ["zh/index.html"],
+      "key_interfaces": ["导航结构 (/zh/about/, /zh/projects/, /zh/publications/, /zh/contact/)", "语言切换 API (路径镜像到 /en/)"],
+      "dependencies": ["/assets/css/", "/assets/js/", "/icons/favicon.svg"],
+      "tests": "手动测试清单（导航高亮、语言切换、邮箱防爬、BibTeX 复制）",
+      "data_models": ["项目卡片结构", "项目详情页结构（Problem/Approach/Results/Role/Links）", "论文条目结构"],
+      "important_paths": [
+        "zh/index.html",
+        "zh/about/index.html",
+        "zh/projects/index.html",
+        "zh/projects/hybrid-precision/index.html",
+        "zh/projects/coral-rag-qa/index.html",
+        "zh/projects/ai-customer-service/index.html",
+        "zh/publications/index.html",
+        "zh/contact/index.html"
+      ],
+      "coverage": {
+        "scanned_files": 8,
+        "missing_interfaces": false,
+        "missing_tests": false,
+        "missing_data_models": false
+      },
+      "documentation": "zh/CLAUDE.md"
+    },
+    {
+      "path": "/en/",
+      "name": "英文版内容模块",
+      "language": "HTML/CSS/JS",
+      "responsibility": "英文版页面内容（镜像结构，Home/About/Projects/Publications/Contact）",
+      "entry_points": ["en/index.html"],
+      "key_interfaces": ["导航结构 (/en/about/, /en/projects/, /en/publications/, /en/contact/)", "语言切换 API (路径镜像到 /zh/)"],
+      "dependencies": ["/assets/css/", "/assets/js/", "/icons/favicon.svg"],
+      "tests": "手动测试清单（与中文版一致，英文文案）",
+      "data_models": ["项目卡片结构", "项目详情页结构", "论文条目结构"],
+      "important_paths": [
+        "en/index.html",
+        "en/about/index.html",
+        "en/projects/index.html",
+        "en/projects/hybrid-precision/index.html",
+        "en/projects/coral-rag-qa/index.html",
+        "en/projects/ai-customer-service/index.html",
+        "en/publications/index.html",
+        "en/contact/index.html"
+      ],
+      "coverage": {
+        "scanned_files": 8,
+        "missing_interfaces": false,
+        "missing_tests": false,
+        "missing_data_models": false
+      },
+      "documentation": "en/CLAUDE.md"
+    },
+    {
+      "path": "/assets/",
+      "name": "资源模块",
+      "language": "CSS/JavaScript",
+      "responsibility": "全局样式、交互脚本、图标资源",
+      "entry_points": ["assets/css/base.css", "assets/js/main.js"],
+      "key_interfaces": [
+        "CSS 变量 API (--color-primary, --color-bg, --radius-lg 等)",
+        "JavaScript 模块 API (i18n.js, email.js, copy.js, main.js)"
+      ],
+      "dependencies": ["浏览器原生 Web APIs (localStorage, matchMedia, clipboard)"],
+      "tests": "手动测试清单（响应式、可访问性、动效、语言切换、Header 压缩、返回顶部、邮箱防爬、BibTeX 复制）",
+      "data_models": ["CSS 类命名规范 (BEM)", "动效类 (fade-up/delay-N/parallax)"],
+      "important_paths": [
+        "assets/css/base.css",
+        "assets/css/components.css",
+        "assets/css/motion.css",
+        "assets/js/main.js",
+        "assets/js/i18n.js",
+        "assets/js/email.js",
+        "assets/js/copy.js"
+      ],
+      "coverage": {
+        "scanned_files": 7,
+        "missing_interfaces": false,
+        "missing_tests": false,
+        "missing_data_models": false
+      },
+      "documentation": "assets/CLAUDE.md"
+    },
+    {
+      "path": ".github/workflows/",
+      "name": "CI/CD 模块",
+      "language": "YAML",
+      "responsibility": "GitHub Pages 部署、PR 守卫、自动合并",
+      "entry_points": [
+        ".github/workflows/github-pages.yml",
+        ".github/workflows/pr-guard.yml",
+        ".github/workflows/enable-automerge.yml"
+      ],
+      "key_interfaces": ["GitHub Actions triggers (push to main, PR events, workflow_dispatch)"],
+      "dependencies": ["GitHub Actions runners", "GitHub Pages service"],
+      "tests": "自动化验证（PR Guard 检查 index.html 等核心文件）",
+      "data_models": [],
+      "important_paths": [
+        ".github/workflows/github-pages.yml",
+        ".github/workflows/pr-guard.yml",
+        ".github/workflows/enable-automerge.yml"
+      ],
+      "coverage": {
+        "scanned_files": 3,
+        "missing_interfaces": false,
+        "missing_tests": false,
+        "missing_data_models": true,
+        "note": "YAML 配置无需数据模型"
+      },
+      "documentation": "见根目录 WORKFLOW_GUIDE.md"
+    },
+    {
+      "path": "/",
+      "name": "根目录文档模块",
+      "language": "Markdown",
+      "responsibility": "项目文档（README、设计总览、工作流指南、Claude 协作指南）",
+      "entry_points": ["README.md", "DESIGN_OVERVIEW.md", "WORKFLOW_GUIDE.md", "CLAUDE.md"],
+      "key_interfaces": ["项目愿景", "架构总览", "模块索引", "运行与开发指引"],
+      "dependencies": [],
+      "tests": "文档一致性检查（手动）",
+      "data_models": [],
+      "important_paths": [
+        "README.md",
+        "DESIGN_OVERVIEW.md",
+        "WORKFLOW_GUIDE.md",
+        "CLAUDE.md",
+        ".claude/index.json"
+      ],
+      "coverage": {
+        "scanned_files": 5,
+        "missing_interfaces": false,
+        "missing_tests": false,
+        "missing_data_models": true,
+        "note": "文档模块无需数据模型"
+      },
+      "documentation": "CLAUDE.md"
+    }
+  ],
+  "coverage_summary": {
+    "total_modules": 5,
+    "modules_with_documentation": 5,
+    "modules_with_full_coverage": 5,
+    "main_gaps": [],
+    "ignored_paths": [
+      ".git/",
+      "未找到其他忽略路径（项目无 node_modules/dist/build 等）"
+    ]
+  },
+  "recommended_next_steps": [
+    "添加结构化数据（schema.org/Person）到 zh/about/index.html 与 en/about/index.html",
+    "使用 Lighthouse CI 在 PR 阶段验证性能与可访问性",
+    "考虑添加 <link rel='alternate' hreflang='...'> 标签以增强国际化 SEO"
+  ]
+}
