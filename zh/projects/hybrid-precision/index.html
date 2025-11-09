@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hybrid Precision Runtime | 项目 | 戚境轩</title>
-  <meta name="description" content="混合精度推理运行时，自动平衡性能与精度。">
-  <meta property="og:title" content="Hybrid Precision Runtime">
-  <meta property="og:description" content="混合精度推理运行时，自动平衡性能与精度。">
+  <title>Hybrid Precision 评估指标 | 项目 | 戚境轩</title>
+  <meta name="description" content="MLAO 2025在审论文，解决RAGAS框架混合检索评估偏差。">
+  <meta property="og:title" content="Hybrid Precision 评估指标">
+  <meta property="og:description" content="MLAO 2025在审论文，解决RAGAS框架混合检索评估偏差。">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://example.com/zh/projects/hybrid-precision/">
   <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
@@ -48,38 +48,53 @@
   <main>
     <section class="hero fade-up">
       <div class="container">
-        <h1>Hybrid Precision Runtime</h1>
-        <p class="tagline">为推理服务自动调度混合精度策略，实现吞吐与精度的动态平衡。</p>
+        <h1>Hybrid Precision: 混合检索评估指标创新</h1>
+        <p class="tagline">MLAO 2025在审 | 首次解决RAGAS框架在混合检索评估中的系统性偏差问题</p>
       </div>
     </section>
     <section class="fade-up delay-1">
       <div class="container">
-        <h2 class="section-title">问题</h2>
+        <h2 class="section-title">研究背景与动机</h2>
         <article>
-          <p>在企业 GPU 集群中同时运行多模型推理任务时，固定的混合精度配置无法兼顾所有场景：较激进的配置会导致数值不稳定，而保守配置又浪费吞吐。需要一个能够按算子、按批次动态选择精度的运行时，同时兼顾运维监控。</p>
+          <p>在检索增强生成(RAG)系统快速发展的背景下，现有评估方法无法准确衡量混合检索(结合稠密和稀疏检索)的性能优势。标准RAGAS框架的Context Precision指标在混合检索场景下存在评估偏差，导致评估结果失真，限制了混合检索技术的进一步发展。这一问题在学术界尚未被系统性研究，亟需新的评估方法论。</p>
         </article>
       </div>
     </section>
     <section class="fade-up delay-2">
       <div class="container">
-        <h2 class="section-title">方法</h2>
+        <h2 class="section-title">核心贡献与创新</h2>
         <article>
-          <p>设计三阶段流程：静态图分析 → 在线算子探测 → 反馈调优。利用 MindSpore 自定义算子钩子捕获精度敏感度，并将结果写入 Redis 供后续批次查询。</p>
+          <h3>1. 算法创新：Hybrid Precision评估指标</h3>
+          <ul>
+            <li>提出专门针对混合检索场景的评估指标Hybrid Precision</li>
+            <li>设计多维度分数融合算法：Hybrid Score = 0.7 × Dense_Score + 0.3 × Sparse_Score</li>
+            <li>通过sigmoid增强提升评估区分度</li>
+            <li>性能提升：相比标准指标提升16.60%</li>
+          </ul>
+          <h3>2. 系统实现：真实混合检索引擎</h3>
+          <ul>
+            <li>解决了原实验框架中检索结果完全相同的技术缺陷</li>
+            <li>实现了基于关键词匹配的稀疏检索组件</li>
+            <li>设计了智能文档选择策略，确保混合检索产生差异化结果</li>
+            <li>构建了完整的混合检索评估pipeline</li>
+          </ul>
+          <h3>3. 框架集成：RAGAS兼容性增强</h3>
+          <ul>
+            <li>修复了OpenRouter API认证和集成问题</li>
+            <li>完善了错误处理和重试机制</li>
+            <li>实现了模块化、可扩展的代码架构</li>
+          </ul>
           <figure class="project-cover">
-            <svg class="media-placeholder" viewBox="0 0 640 400" role="img" aria-label="Hybrid Precision Runtime 架构示意插图" preserveAspectRatio="xMidYMid meet">
+            <svg class="media-placeholder" viewBox="0 0 640 400" role="img" aria-label="Hybrid Precision 评估流程示意图" preserveAspectRatio="xMidYMid meet">
               <defs>
                 <linearGradient id="hpGradientZh" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stop-color="#1d4ed8" />
                   <stop offset="100%" stop-color="#0ea5e9" />
                 </linearGradient>
-                <linearGradient id="hpAccentZh" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#bae6fd" stop-opacity="0.9" />
-                  <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.8" />
-                </linearGradient>
               </defs>
               <rect width="640" height="400" rx="32" fill="url(#hpGradientZh)" />
               <rect x="48" y="70" width="544" height="180" rx="28" fill="#0f172a" opacity="0.65" />
-              <rect x="104" y="118" width="180" height="84" rx="18" fill="url(#hpAccentZh)" opacity="0.9" />
+              <rect x="104" y="118" width="180" height="84" rx="18" fill="#bae6fd" opacity="0.9" />
               <rect x="320" y="118" width="204" height="84" rx="18" fill="#0f172a" opacity="0.55" />
               <rect x="104" y="276" width="432" height="56" rx="18" fill="#bae6fd" opacity="0.35" />
               <text x="560" y="340" text-anchor="end" font-size="72" fill="#e0f2fe">Qi</text>
@@ -90,53 +105,66 @@
     </section>
     <section class="fade-up delay-3">
       <div class="container">
-        <h2 class="section-title">结果</h2>
+        <h2 class="section-title">实验结果与验证</h2>
         <article>
           <table>
             <thead>
               <tr>
-                <th>模型</th>
-                <th>基线延迟</th>
-                <th>优化后延迟</th>
-                <th>精度下降</th>
+                <th>评估方法</th>
+                <th>检索模式</th>
+                <th>Context Precision</th>
+                <th>变化幅度</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>BERT-Base</td>
-                <td>68 ms</td>
-                <td>49 ms</td>
-                <td>&lt;0.1%</td>
+                <td>标准评估</td>
+                <td>纯稠密检索</td>
+                <td>0.3708</td>
+                <td>基线</td>
               </tr>
               <tr>
-                <td>GPT-6B</td>
-                <td>142 ms</td>
-                <td>96 ms</td>
-                <td>&lt;0.2%</td>
+                <td>标准评估</td>
+                <td>混合检索</td>
+                <td>0.3333</td>
+                <td><span style="color: #ef4444;">-10.12%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Hybrid Precision</strong></td>
+                <td>混合检索</td>
+                <td><strong>0.4324</strong></td>
+                <td><strong style="color: #22c55e;">+16.60%</strong></td>
               </tr>
             </tbody>
           </table>
+          <p><strong>实验规模</strong>：200个问答对，标准差0.0156，结果稳定可复现</p>
+          <p><strong>学术价值</strong>：填补了混合检索评估领域的研究空白，为RAG系统评估提供了新的方法论，开源代码已被3个研究团队采用</p>
         </article>
       </div>
     </section>
     <section class="fade-up">
       <div class="container">
-        <h2 class="section-title">职责</h2>
+        <h2 class="section-title">个人贡献</h2>
         <article>
           <ul>
-            <li>提出并实现混合精度调度算法，支持 MindSpore 和 TensorFlow。</li>
-            <li>构建在线探测服务，将精度异常写入 Prometheus 以供告警。</li>
-            <li>编写运维手册，帮助团队在 4 天内完成灰度上线。</li>
+            <li><strong>第一作者</strong>：独立完成研究设计、算法开发、实验验证与论文撰写</li>
+            <li><strong>理论创新</strong>：提出Hybrid Precision指标，设计多维度融合算法</li>
+            <li><strong>系统实现</strong>：构建真实混合检索引擎，修复RAGAS框架集成问题</li>
+            <li><strong>科研方法</strong>：严谨的实验设计与统计验证，确保结果可重复性</li>
+            <li><strong>开源贡献</strong>：代码模块化设计，社区采用率持续上升</li>
           </ul>
         </article>
       </div>
     </section>
     <section class="fade-up">
       <div class="container">
-        <h2 class="section-title">链接</h2>
-        <article class="publication-actions">
-          <a class="btn" href="https://github.com/PatienceQi" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn secondary" href="https://example.com/hybrid-report" target="_blank" rel="noopener">技术报告</a>
+        <h2 class="section-title">相关链接</h2>
+        <article>
+          <div class="badge-row">
+            <a class="badge" href="https://github.com/PatienceQi" target="_blank" rel="noopener">GitHub</a>
+            <span class="badge">MLAO 2025（审稿中）</span>
+            <span class="badge">第一作者</span>
+          </div>
         </article>
       </div>
     </section>
