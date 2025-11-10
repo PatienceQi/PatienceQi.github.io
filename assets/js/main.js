@@ -1,4 +1,4 @@
-import { initLanguageToggle, syncLanguageToggleLabel } from './i18n.js';
+import { initLanguageToggle, redirectFromRootIfNeeded, syncLanguageToggleLabel } from './i18n.js';
 import { setupEmailProtection } from './email.js';
 import { setupCopyHandlers } from './copy.js';
 
@@ -61,16 +61,54 @@ function initParallax() {
 }
 
 function initLanguage() {
-  const toggleButton = document.querySelector('.lang-toggle');
-  syncLanguageToggleLabel(toggleButton);
-  initLanguageToggle(toggleButton);
+  const toggles = document.querySelectorAll('.lang-toggle');
+  if (!toggles.length) return;
+
+  toggles.forEach((toggle) => {
+    syncLanguageToggleLabel(toggle);
+    initLanguageToggle(toggle);
+  });
 }
 
 function initYear() {
-  const yearSpan = document.querySelector('[data-current-year]');
-  if (yearSpan) {
-    yearSpan.textContent = new Date().getFullYear();
-  }
+  const yearSpans = document.querySelectorAll('[data-current-year]');
+  if (!yearSpans.length) return;
+
+  const year = new Date().getFullYear();
+  yearSpans.forEach((span) => {
+    span.textContent = year;
+  });
+}
+
+function initActiveNavigation() {
+  const links = document.querySelectorAll('.nav-links a');
+  if (!links.length) return;
+
+  const currentPath = (() => {
+    const raw = window.location.pathname.replace(/index\.html$/, '');
+    if (!raw || raw === '/') {
+      return '/';
+    }
+    return raw.endsWith('/') ? raw : `${raw}/`;
+  })();
+
+  links.forEach((link) => {
+    const linkPath = new URL(link.getAttribute('href'), window.location.origin)
+      .pathname.replace(/index\.html$/, '');
+    const normalisedLink = linkPath === '/' ? '/' : (linkPath.endsWith('/') ? linkPath : `${linkPath}/`);
+
+    if (
+      normalisedLink === '/'
+        ? currentPath === '/'
+        : currentPath.startsWith(normalisedLink)
+    ) {
+      link.setAttribute('aria-current', 'page');
+      link.classList.add('is-active');
+    } else {
+      link.removeAttribute('aria-current');
+      link.classList.remove('is-active');
+    }
+  });
 }
 
 function init() {
@@ -79,8 +117,10 @@ function init() {
   initParallax();
   initLanguage();
   initYear();
+  initActiveNavigation();
   setupEmailProtection();
   setupCopyHandlers();
 }
 
+redirectFromRootIfNeeded();
 document.addEventListener('DOMContentLoaded', init);
