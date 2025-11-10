@@ -37,25 +37,35 @@ function hydrateMailtoLinks() {
 export function setupEmailProtection() {
   hydrateMailtoLinks();
 
-  const emailStack = document.querySelector('.email-stack');
-  if (!emailStack) return;
+  const emailStacks = document.querySelectorAll('.email-stack');
+  if (!emailStacks.length) return;
 
-  const secondary = emailStack.querySelector('.email-secondary');
-  if (!secondary) return;
+  const touchEnvironment = isTouchDevice();
 
-  if (isTouchDevice()) {
-    emailStack.classList.add('active');
-    emailStack.setAttribute('aria-expanded', 'true');
-    return;
-  }
+  emailStacks.forEach((emailStack) => {
+    const secondary = emailStack.querySelector('.email-secondary');
+    if (!secondary) return;
 
-  const reveal = () => {
-    emailStack.classList.add('active');
-    emailStack.setAttribute('aria-expanded', 'true');
-  };
+    if (touchEnvironment) {
+      emailStack.classList.add('active');
+      emailStack.setAttribute('aria-expanded', 'true');
+      secondary.removeAttribute('aria-hidden');
+      return;
+    }
 
-  emailStack.setAttribute('aria-expanded', 'false');
-  emailStack.addEventListener('mouseenter', reveal);
-  emailStack.addEventListener('focusin', reveal);
-  emailStack.addEventListener('click', reveal);
+    let revealed = false;
+    const reveal = () => {
+      if (revealed) return;
+      revealed = true;
+      emailStack.classList.add('active');
+      emailStack.setAttribute('aria-expanded', 'true');
+      secondary.removeAttribute('aria-hidden');
+    };
+
+    emailStack.setAttribute('aria-expanded', 'false');
+    secondary.setAttribute('aria-hidden', 'true');
+    emailStack.addEventListener('mouseenter', reveal);
+    emailStack.addEventListener('focusin', reveal);
+    emailStack.addEventListener('click', reveal);
+  });
 }
