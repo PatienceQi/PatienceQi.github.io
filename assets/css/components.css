@@ -68,6 +68,17 @@ header .container {
   transform-origin: left;
 }
 
+.nav-links a[aria-current="page"],
+.nav-links a.is-active {
+  color: var(--color-primary);
+}
+
+.nav-links a[aria-current="page"]::after,
+.nav-links a.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
@@ -253,6 +264,8 @@ header .container {
   align-items: center;
   gap: 0.5rem;
   font-weight: 600;
+  text-decoration: none;
+  color: inherit;
 }
 
 .email-stack .email .dot {
@@ -262,6 +275,12 @@ header .container {
   border-radius: 50%;
 }
 
+.email-stack .email:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
 .email-secondary {
   display: none;
   color: var(--color-muted);
@@ -269,6 +288,12 @@ header .container {
 
 .email-stack.active .email-secondary {
   display: inline-flex;
+}
+
+.footnote {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--color-muted);
 }
 
 @media (max-width: 900px) {
