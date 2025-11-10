@@ -42,24 +42,31 @@ function detectCurrentLanguage(pathname) {
   return 'zh';
 }
 
-export function initLanguageToggle(toggleButton) {
-  if (!toggleButton) return;
+export function initLanguageToggle(toggleControl) {
+  if (!toggleControl) return;
 
-  toggleButton.addEventListener('click', () => {
+  toggleControl.addEventListener('click', (event) => {
     const currentLang = detectCurrentLanguage(window.location.pathname);
     const nextLang = currentLang === 'zh' ? 'en' : 'zh';
+    const target = inferTargetPath(window.location.pathname, nextLang);
+
     try {
       localStorage.setItem(LANGUAGE_KEY, nextLang);
     } catch (error) {
       // Ignore storage errors.
     }
-    const target = inferTargetPath(window.location.pathname, nextLang);
-    window.location.href = target;
+
+    if (!(toggleControl instanceof HTMLAnchorElement)) {
+      event.preventDefault();
+      window.location.href = target;
+    } else {
+      toggleControl.setAttribute('href', target);
+    }
   });
 }
 
-export function syncLanguageToggleLabel(toggleButton) {
-  if (!toggleButton) return;
+export function syncLanguageToggleLabel(toggleControl) {
+  if (!toggleControl) return;
   const lang = detectCurrentLanguage(window.location.pathname);
   try {
     const stored = localStorage.getItem(LANGUAGE_KEY);
@@ -70,6 +77,10 @@ export function syncLanguageToggleLabel(toggleButton) {
     // localStorage might be unavailable; fail silently.
   }
   const next = lang === 'zh' ? 'EN' : 'ZH';
-  toggleButton.textContent = next;
-  toggleButton.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+  const target = inferTargetPath(window.location.pathname, next);
+  toggleControl.textContent = next;
+  toggleControl.setAttribute('data-target-path', target);
+  if (toggleControl instanceof HTMLAnchorElement) {
+    toggleControl.setAttribute('href', target);
+  }
 }
