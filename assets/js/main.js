@@ -1,4 +1,4 @@
-import { initLanguageToggle, syncLanguageToggleLabel } from './i18n.js';
+import { initLanguageToggle, redirectFromRootIfNeeded, syncLanguageToggleLabel } from './i18n.js';
 import { setupEmailProtection } from './email.js';
 import { setupCopyHandlers } from './copy.js';
 
@@ -61,9 +61,13 @@ function initParallax() {
 }
 
 function initLanguage() {
-  const toggleButton = document.querySelector('.lang-toggle');
-  syncLanguageToggleLabel(toggleButton);
-  initLanguageToggle(toggleButton);
+  const toggles = document.querySelectorAll('.lang-toggle');
+  if (!toggles.length) return;
+
+  toggles.forEach((toggle) => {
+    syncLanguageToggleLabel(toggle);
+    initLanguageToggle(toggle);
+  });
 }
 
 function initYear() {
@@ -115,4 +119,5 @@ function init() {
   setupCopyHandlers();
 }
 
+redirectFromRootIfNeeded();
 document.addEventListener('DOMContentLoaded', init);

@@ -1,5 +1,21 @@
 const LANGUAGE_KEY = 'lang';
 
+function readStoredLanguage() {
+  try {
+    return localStorage.getItem(LANGUAGE_KEY);
+  } catch (error) {
+    return null;
+  }
+}
+
+function persistLanguage(lang) {
+  try {
+    localStorage.setItem(LANGUAGE_KEY, lang);
+  } catch (error) {
+    // Ignore storage errors.
+  }
+}
+
 function normalisePath(pathname) {
   if (!pathname) return '/';
   const withoutIndex = pathname.replace(/index\.html$/, '');
@@ -50,11 +66,7 @@ export function initLanguageToggle(toggleControl) {
     const nextLang = currentLang === 'zh' ? 'en' : 'zh';
     const target = inferTargetPath(window.location.pathname, nextLang);
 
-    try {
-      localStorage.setItem(LANGUAGE_KEY, nextLang);
-    } catch (error) {
-      // Ignore storage errors.
-    }
+    persistLanguage(nextLang);
 
     if (!(toggleControl instanceof HTMLAnchorElement)) {
       event.preventDefault();
@@ -68,13 +80,9 @@ export function initLanguageToggle(toggleControl) {
 export function syncLanguageToggleLabel(toggleControl) {
   if (!toggleControl) return;
   const lang = detectCurrentLanguage(window.location.pathname);
-  try {
-    const stored = localStorage.getItem(LANGUAGE_KEY);
-    if (!stored || stored !== lang) {
-      localStorage.setItem(LANGUAGE_KEY, lang);
-    }
-  } catch (error) {
-    // localStorage might be unavailable; fail silently.
+  const stored = readStoredLanguage();
+  if (!stored || stored !== lang) {
+    persistLanguage(lang);
   }
   const next = lang === 'zh' ? 'EN' : 'ZH';
   const target = inferTargetPath(window.location.pathname, next);
@@ -83,4 +91,21 @@ export function syncLanguageToggleLabel(toggleControl) {
   if (toggleControl instanceof HTMLAnchorElement) {
     toggleControl.setAttribute('href', target);
   }
+}
+
+export function redirectFromRootIfNeeded() {
+  if (window.location.pathname !== '/') return;
+
+  const stored = readStoredLanguage();
+
+  if (stored === 'en') {
+    window.location.replace('/en/');
+    return;
+  }
+
+  if (stored !== 'zh') {
+    persistLanguage('zh');
+  }
+
+  window.location.replace('/zh/');
 }
