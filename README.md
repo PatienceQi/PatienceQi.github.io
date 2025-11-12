@@ -10,7 +10,7 @@ A static, bilingual personal website for Qi Jingxuan. The site is built with van
 python -m http.server
 ```
 
-Open <http://localhost:8000> in your browser.
+Then open <http://localhost:8000> in your browser.
 
 ## Deployment
 
