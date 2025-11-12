@@ -10,10 +10,11 @@ permissions:
 
 jobs:
   enable:
-    # Auto-enable only for codex/* branches or when the 'automerge' label is present
+    # 仅在非 Draft 的 PR 上尝试开启 Auto-merge
     if: >
-      startsWith(github.event.pull_request.head.ref, 'codex/') ||
-      contains(join(github.event.pull_request.labels.*.name), 'automerge')
+      github.event.pull_request.draft == false &&
+      ( startsWith(github.event.pull_request.head.ref, 'codex/') ||
+        contains(join(github.event.pull_request.labels.*.name), 'automerge') )
     runs-on: ubuntu-latest
     steps:
       - name: Enable auto-merge (squash)
