@@ -41,6 +41,10 @@ export function setupEmailProtection() {
     if (!secondary) return;
 
     const prefersMobileLayout = window.matchMedia('(max-width: 640px)');
+    const prefersNonHover = window.matchMedia('(hover: none)');
+
+    const shouldDefaultToExpanded = () =>
+      prefersMobileLayout.matches || prefersNonHover.matches;
 
     const setExpandedState = (expanded) => {
       if (expanded) {
@@ -55,28 +59,33 @@ export function setupEmailProtection() {
     };
 
     const syncToViewport = () => {
-      setExpandedState(prefersMobileLayout.matches);
+      setExpandedState(shouldDefaultToExpanded());
     };
 
     syncToViewport();
 
-    const handleMediaChange = (event) => {
-      setExpandedState(event.matches);
+    const handleMobileLayoutChange = () => {
+      setExpandedState(shouldDefaultToExpanded());
     };
 
-    if (typeof prefersMobileLayout.addEventListener === 'function') {
-      prefersMobileLayout.addEventListener('change', handleMediaChange);
-    } else if (typeof prefersMobileLayout.addListener === 'function') {
-      prefersMobileLayout.addListener(handleMediaChange);
-    }
+    const registerMediaListener = (mediaQueryList) => {
+      if (typeof mediaQueryList.addEventListener === 'function') {
+        mediaQueryList.addEventListener('change', handleMobileLayoutChange);
+      } else if (typeof mediaQueryList.addListener === 'function') {
+        mediaQueryList.addListener(handleMobileLayoutChange);
+      }
+    };
+
+    registerMediaListener(prefersMobileLayout);
+    registerMediaListener(prefersNonHover);
 
     const revealSecondary = () => {
-      if (prefersMobileLayout.matches) return;
+      if (shouldDefaultToExpanded()) return;
       setExpandedState(true);
     };
 
     const hideSecondary = () => {
-      if (prefersMobileLayout.matches) return;
+      if (shouldDefaultToExpanded()) return;
       setExpandedState(false);
     };
 
@@ -85,7 +94,7 @@ export function setupEmailProtection() {
     emailStack.addEventListener('click', revealSecondary);
     emailStack.addEventListener('mouseleave', hideSecondary);
     emailStack.addEventListener('focusout', (event) => {
-      if (prefersMobileLayout.matches) return;
+      if (shouldDefaultToExpanded()) return;
       if (event.relatedTarget && emailStack.contains(event.relatedTarget)) return;
       hideSecondary();
     });
