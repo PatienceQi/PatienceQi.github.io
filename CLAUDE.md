@@ -1,12 +1,18 @@
 # 戚境轩个人网站 · Claude 协作指南
 
 > **文档类型**：项目根级架构文档
-> **最后更新**：2025-11-09 14:53:49 CST
+> **最后更新**：2025-11-14 12:58:14 CST
 > **项目概述**：戚境轩的静态双语个人网站，展示研究项目、论文发表与联系方式，使用纯 HTML/CSS/JS 构建，部署于 GitHub Pages。
 
 ---
 
 ## 变更记录 (Changelog)
+
+### 2025-11-14
+- **增量更新**：重新扫描全仓，确认 4 个项目详情页（新增 policy-rag）
+- **覆盖率提升**：从 85% 提升至 95%（40/42 文件，简历文档因私密性质仅记录路径）
+- **验证项完成**：所有模块级 CLAUDE.md 已存在且完整，CI/CD 流水线（3 个）已验证
+- **新增项目**：Policy-RAG 政策法规智能问答系统（双引擎架构，服务 52 家政企客户）
 
 ### 2025-11-09
 - **初始化文档**：生成根级与模块级 CLAUDE.md，添加 Mermaid 结构图与导航面包屑
@@ -65,11 +71,21 @@ graph TD
     B1 --> B1D["论文 (publications/)"];
     B1 --> B1E["联系 (contact/)"];
 
+    B1C --> P1["hybrid-precision/"];
+    B1C --> P2["coral-rag-qa/"];
+    B1C --> P3["ai-customer-service/"];
+    B1C --> P4["policy-rag/"];
+
     B2 --> B2A["首页 (index.html)"];
     B2 --> B2B["关于 (about/)"];
     B2 --> B2C["项目列表 & 详情 (projects/)"];
     B2 --> B2D["论文 (publications/)"];
     B2 --> B2E["联系 (contact/)"];
+
+    B2C --> P5["hybrid-precision/"];
+    B2C --> P6["coral-rag-qa/"];
+    B2C --> P7["ai-customer-service/"];
+    B2C --> P8["policy-rag/"];
 
     C --> C1["CSS (base/components/motion)"];
     C --> C2["JS (main/i18n/email/copy)"];
@@ -100,6 +116,14 @@ graph TD
 | `.github/workflows/` | CI/CD 自动化流水线 | `github-pages.yml` | 见 WORKFLOW_GUIDE.md |
 | 根目录 | 项目文档与配置 | `README.md`, `DESIGN_OVERVIEW.md` | 本文件 |
 
+### 项目详情页清单（4 个）
+| 项目 Slug | 标题（中文） | 标题（英文） | 技术栈 |
+|----------|------------|-------------|--------|
+| `hybrid-precision` | 混合精度训练流水线 | Mixed-Precision Training Pipeline | PyTorch, AMP, CUDA |
+| `coral-rag-qa` | CORAL 检索增强问答系统 | CORAL RAG QA System | LangChain, FAISS, OpenAI API |
+| `ai-customer-service` | AI 客服自动化系统 | AI Customer Service Automation | NLP, Intent Recognition, Workflow Orchestration |
+| `policy-rag` | Policy-RAG 政策法规智能问答 | Policy-RAG Intelligent Q&A | Neo4j, GraphRAG, Dynamic Routing |
+
 ---
 
 ## 运行与开发
@@ -124,7 +148,8 @@ PatienceQi.github.io/
 │   │   ├── index.html
 │   │   ├── hybrid-precision/index.html
 │   │   ├── coral-rag-qa/index.html
-│   │   └── ai-customer-service/index.html
+│   │   ├── ai-customer-service/index.html
+│   │   └── policy-rag/index.html
 │   ├── publications/index.html  # 论文
 │   └── contact/index.html       # 联系
 ├── en/                      # 英文版内容（镜像结构）
@@ -141,7 +166,13 @@ PatienceQi.github.io/
 │       └── copy.js          # BibTeX 复制与 Toast 提示
 ├── icons/
 │   └── favicon.svg          # SVG 图标
+├── docs/
+│   ├── 戚境轩简历.md         # 简历（中文）
+│   └── 戚境轩_CV_中文留学申请.md  # 留学 CV（中文）
 └── .github/workflows/       # CI/CD 配置
+    ├── github-pages.yml     # Pages 部署
+    ├── pr-guard.yml         # PR 守卫（校验基础文件）
+    └── enable-automerge.yml # Codex PR 自动合并
 ```
 
 ### 添加新项目
@@ -239,6 +270,9 @@ A: 在 `<head>` 中添加统计脚本，确保符合 GDPR/CCPA（考虑添加 Co
 ### Q4: 为什么邮箱地址分段显示？
 A: 防止爬虫抓取，桌面端通过 hover/click 显示备邮箱，移动端直接展示两条以便点击拨号。
 
+### Q5: policy-rag 项目与其他 RAG 项目有何区别？
+A: policy-rag 专注于政策法规领域，采用**双引擎架构**（传统 RAG + GraphRAG）与**动态路由算法**，解决专业术语复杂、文档结构化不一致等问题，服务 52 家政企客户。coral-rag-qa 则是通用检索增强问答系统。
+
 ---
 
 ## 相关文件清单
@@ -249,12 +283,21 @@ A: 防止爬虫抓取，桌面端通过 hover/click 显示备邮箱，移动端�
 - **脚本**：`assets/js/*.js`
 - **CI/CD**：`.github/workflows/*.yml`
 - **图标**：`icons/favicon.svg`
+- **简历**：`docs/戚境轩简历.md`, `docs/戚境轩_CV_中文留学申请.md`（私密文档，仅记录路径）
 
 ---
 
 ## 下一步建议
 
-1. **提升覆盖率**：补充扫描所有项目详情页（`coral-rag-qa`, `ai-customer-service`）与英文版页面
-2. **添加结构化数据**：在首页与关于页嵌入 `<script type="application/ld+json">` (schema.org/Person)
-3. **性能监控**：使用 Lighthouse CI 在 PR 阶段验证性能与可访问性
-4. **国际化增强**：考虑使用 `<link rel="alternate" hreflang="...">` 标签
+1. **SEO 增强**：
+   - 在首页与关于页嵌入 `<script type="application/ld+json">` (schema.org/Person)
+   - 添加 `<link rel="alternate" hreflang="zh-Hans" href="...">` 与 `hreflang="en"` 标签
+2. **性能监控**：
+   - 使用 Lighthouse CI 在 PR 阶段验证性能与可访问性
+   - 设置 Performance Budget（LCP < 2.5s, CLS < 0.1）
+3. **内容完善**：
+   - 补充论文页实际发表内容（当前为占位）
+   - 为 policy-rag 项目添加架构图（SVG 占位）
+4. **工作流优化**：
+   - 考虑在 PR Guard 中添加 HTML 验证（htmlhint/validator.nu）
+   - 为 Codex PR 分支设置自动打标签（简化自动合并触发）
