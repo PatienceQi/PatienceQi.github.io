@@ -3,11 +3,15 @@
 [根目录](../CLAUDE.md) > **zh**
 
 > **模块职责**：中文版页面内容（首页、关于、项目、论文、联系）
-> **最后更新**：2025-11-09 15:01:56 CST
+> **最后更新**：2025-11-14 12:58:14 CST
 
 ---
 
 ## 变更记录 (Changelog)
+
+### 2025-11-14 12:58
+- **增量更新**：新增 `policy-rag` 项目详情页，项目总数更新为 4 个
+- **验证结构一致性**：所有项目详情页均符合 Problem/Approach/Results/Role/Links 六节结构
 
 ### 2025-11-09 15:01
 - **增量更新**：补充扫描 `coral-rag-qa` 与 `ai-customer-service` 项目详情页，覆盖率从 85.7% 提升至 100%
@@ -27,6 +31,7 @@
   - **hybrid-precision**：混合精度训练流水线
   - **coral-rag-qa**：检索增强问答系统（CORAL 流水线）
   - **ai-customer-service**：AI 客服自动化系统（意图识别 + 流程编排）
+  - **policy-rag**：Policy-RAG 政策法规智能问答（双引擎架构 + 动态路由）
 - **论文** (`publications/index.html`)：期刊/会议/预印本列表，支持 BibTeX 复制
 - **联系** (`contact/index.html`)：邮箱、合作邀请
 
@@ -109,10 +114,11 @@
 5. **职责** (Role)：个人贡献列表
 6. **链接** (Links)：GitHub/报告/演示等外链
 
-**已验证项目结构一致性**：
-- `hybrid-precision`：混合精度训练（完整 6 节结构）
-- `coral-rag-qa`：CORAL 流水线（完整 6 节结构，Results 包含响应时间与正确率对比表）
-- `ai-customer-service`：客服自动化（完整 6 节结构，Results 包含自动化覆盖率与满意度对比表）
+**已验证项目结构一致性**（4 个项目）：
+- **hybrid-precision**：混合精度训练（完整 6 节结构）
+- **coral-rag-qa**：CORAL 流水线（完整 6 节结构，Results 包含响应时间与正确率对比表）
+- **ai-customer-service**：客服自动化（完整 6 节结构，Results 包含自动化覆盖率与满意度对比表）
+- **policy-rag**：政策法规智能问答（完整 6 节结构，Results 包含双引擎效率对比与路由准确率数据）
 
 ### 论文条目结构
 ```html
@@ -162,6 +168,9 @@
 ### Q3: 论文列表如何排序？
 按发表类型（期刊 > 会议 > 预印本）与年份降序，每个类型单独 `<section>`。
 
+### Q4: policy-rag 项目的特殊之处？
+采用**双引擎架构**（传统 RAG + GraphRAG）与**动态路由算法**，针对政策法规领域的专业术语复杂、文档结构化不一致等问题优化，协同效率提升 156%，路由准确率达 89.7%。
+
 ---
 
 ## 相关文件清单
@@ -173,6 +182,7 @@
   - `zh/projects/hybrid-precision/index.html`（混合精度训练）
   - `zh/projects/coral-rag-qa/index.html`（检索增强问答）
   - `zh/projects/ai-customer-service/index.html`（AI 客服自动化）
+  - `zh/projects/policy-rag/index.html`（政策法规智能问答）
   - `zh/publications/index.html`（论文）
   - `zh/contact/index.html`（联系）
 - **全局资源**：`/assets/css/`, `/assets/js/`, `/icons/favicon.svg`
@@ -185,3 +195,4 @@
 1. **SEO 优化**：每个页面检查 `<title>` 与 `<meta name="description">` 是否精准
 2. **结构化数据**：在 `about/index.html` 中添加 `<script type="application/ld+json">` (schema.org/Person)
 3. **多语言 SEO**：添加 `<link rel="alternate" hreflang="zh-Hans" href="...">` 与 `hreflang="en"` 标签
+4. **项目架构图**：为 policy-rag 补充双引擎架构 SVG 图示

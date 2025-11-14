@@ -3,11 +3,15 @@
 [Root](../CLAUDE.md) > **en**
 
 > **Module Responsibility**: English version pages (Home, About, Projects, Publications, Contact)
-> **Last Updated**: 2025-11-09 15:01:56 CST
+> **Last Updated**: 2025-11-14 12:58:14 CST
 
 ---
 
 ## Changelog
+
+### 2025-11-14 12:58
+- **Incremental Update**: Added `policy-rag` project detail page, total projects updated to 4
+- **Structure Validation**: All project detail pages comply with Problem/Approach/Results/Role/Links six-section structure
 
 ### 2025-11-09 15:01
 - **Incremental Update**: Added `coral-rag-qa` and `ai-customer-service` project detail pages, coverage improved from 85.7% to 100%
@@ -27,6 +31,7 @@ Maintains all English content pages, including:
   - **hybrid-precision**: Mixed-precision training pipeline
   - **coral-rag-qa**: Retrieval-augmented QA system (CORAL pipeline)
   - **ai-customer-service**: AI customer service automation (Intent + Orchestration)
+  - **policy-rag**: Policy-RAG intelligent Q&A (Dual-engine architecture + Dynamic routing)
 - **Publications** (`publications/index.html`): Journal/Conference/Preprint lists with BibTeX copy
 - **Contact** (`contact/index.html`): Email, Collaboration invitation
 
@@ -110,10 +115,11 @@ Current page link must have `aria-current="page"`.
 5. **Role**: Personal contributions list
 6. **Links**: GitHub/Report/Demo links
 
-**Verified Structure Consistency**:
-- `hybrid-precision`: Mixed-precision training (complete 6-section structure)
-- `coral-rag-qa`: CORAL pipeline (complete 6-section structure, Results include response time & accuracy comparison table)
-- `ai-customer-service`: Service automation (complete 6-section structure, Results include coverage & CSAT comparison table)
+**Verified Structure Consistency (4 projects)**:
+- **hybrid-precision**: Mixed-precision training (complete 6-section structure)
+- **coral-rag-qa**: CORAL pipeline (complete 6-section structure, Results include response time & accuracy comparison table)
+- **ai-customer-service**: Service automation (complete 6-section structure, Results include coverage & CSAT comparison table)
+- **policy-rag**: Policy intelligent Q&A (complete 6-section structure, Results include dual-engine efficiency comparison & routing accuracy data)
 
 ### Publication Entry Structure
 ```html
@@ -163,6 +169,9 @@ Edit `en/index.html`'s `<section class="hero">` section, sync with Chinese versi
 ### Q3: How to sort publications?
 By publication type (Journal > Conference > Preprint) and descending year, each type in separate `<section>`.
 
+### Q4: What's special about the policy-rag project?
+Adopts **dual-engine architecture** (traditional RAG + GraphRAG) and **dynamic routing algorithm**, optimized for complex terminology and inconsistent document structure in the policy domain, achieving 156% efficiency improvement and 89.7% routing accuracy.
+
 ---
 
 ## Related Files
@@ -174,6 +183,7 @@ By publication type (Journal > Conference > Preprint) and descending year, each 
   - `en/projects/hybrid-precision/index.html` (Mixed-Precision Training)
   - `en/projects/coral-rag-qa/index.html` (Retrieval-Augmented QA)
   - `en/projects/ai-customer-service/index.html` (AI Customer Service Automation)
+  - `en/projects/policy-rag/index.html` (Policy Intelligent Q&A)
   - `en/publications/index.html` (Publications)
   - `en/contact/index.html` (Contact)
 - **Global Resources**: `/assets/css/`, `/assets/js/`, `/icons/favicon.svg`
@@ -186,3 +196,4 @@ By publication type (Journal > Conference > Preprint) and descending year, each 
 1. **SEO Optimization**: Verify `<title>` and `<meta name="description">` for each page
 2. **Structured Data**: Add `<script type="application/ld+json">` (schema.org/Person) in `about/index.html`
 3. **Multilingual SEO**: Add `<link rel="alternate" hreflang="en" href="...">` and `hreflang="zh-Hans"` tags
+4. **Project Architecture Diagram**: Add dual-engine architecture SVG illustration for policy-rag
