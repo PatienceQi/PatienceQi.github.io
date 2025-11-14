@@ -2,18 +2,20 @@ name: Enable auto-merge for Codex PRs
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize, labeled]
+    types: [opened, reopened, synchronize, labeled, closed]
 
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 
 jobs:
   enable:
     # Auto-enable for branches created by Codex (prefix) or when the "automerge" label is present
     if: |
-      startsWith(github.event.pull_request.head.ref, 'codex/') ||
-      contains(join(github.event.pull_request.labels.*.name), 'automerge')
+      github.event.action != 'closed' &&
+      (startsWith(github.event.pull_request.head.ref, 'codex/') ||
+      contains(join(github.event.pull_request.labels.*.name), 'automerge'))
     runs-on: ubuntu-latest
     steps:
       - name: Enable auto-merge (squash)
@@ -22,3 +24,25 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ github.event.pull_request.number }}
           merge-method: squash
+
+  trigger-deploy:
+    # Trigger deployment after Codex PR is merged
+    if: |
+      github.event.action == 'closed' &&
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      (startsWith(github.event.pull_request.head.ref, 'codex/') ||
+      contains(join(github.event.pull_request.labels.*.name), 'automerge'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Pages deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'github-pages.yml',
+              ref: 'main'
+            });
+            console.log('✅ Triggered GitHub Pages deployment');
