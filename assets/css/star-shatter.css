@@ -1,0 +1,16 @@
+#star-shatter-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: #000; /* Deep space black */
+  pointer-events: all; /* Block interactions initially */
+  transition: opacity 1s ease-out;
+}
+
+#star-shatter-overlay.fading-out {
+  opacity: 0;
+  pointer-events: none;
+}

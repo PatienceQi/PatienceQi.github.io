@@ -1,6 +1,7 @@
 import { initLanguageToggle, redirectFromRootIfNeeded, syncLanguageToggleLabel } from './i18n.js';
 import { setupEmailProtection } from './email.js';
 import { setupCopyHandlers } from './copy.js';
+import { initStarShatter } from './star-shatter.js';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -120,6 +121,10 @@ function init() {
   initActiveNavigation();
   setupEmailProtection();
   setupCopyHandlers();
+
+  if (!prefersReducedMotion) {
+    initStarShatter();
+  }
 }
 
 redirectFromRootIfNeeded();
