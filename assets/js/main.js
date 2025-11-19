@@ -1,7 +1,7 @@
 import { initLanguageToggle, redirectFromRootIfNeeded, syncLanguageToggleLabel } from './i18n.js';
 import { setupEmailProtection } from './email.js';
 import { setupCopyHandlers } from './copy.js';
-import { initStarShatter } from './star-shatter.js';
+import { initImageShatter } from './image-shatter.js';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -123,7 +123,7 @@ function init() {
   setupCopyHandlers();
 
   if (!prefersReducedMotion) {
-    initStarShatter();
+    initImageShatter();
   }
 }
 
