@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SGE: 统计型表格的忠实图谱构建 | 项目 | 戚境轩</title>
+  <meta name="description" content="探索戚境轩的SGE项目——面向GraphRAG的结构引导提取框架，通过拓扑感知约束提取实现统计型表格的忠实图谱构建，在10个数据集、977条金标准事实上最高提升6.0倍保真度。">
+  <meta property="og:title" content="SGE: 统计型表格的忠实图谱构建">
+  <meta property="og:description" content="探索戚境轩的SGE项目——面向GraphRAG的结构引导提取框架，通过拓扑感知约束提取实现统计型表格的忠实图谱构建，在10个数据集、977条金标准事实上最高提升6.0倍保真度。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://example.com/zh/projects/sge/">
+  <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/motion.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a class="logo" href="/zh/" aria-label="Qi Jingxuan home">
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <rect width="48" height="48" rx="12" fill="url(#grad-sge-zh)" />
+          <defs>
+            <linearGradient id="grad-sge-zh" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#a78bfa" />
+              <stop offset="100%" stop-color="#7c3aed" />
+            </linearGradient>
+          </defs>
+          <path d="M16 32c8 0 12-6 12-12s-4-12-12-12v6c4 0 6 3 6 6s-2 6-6 6v6z" fill="#0f172a" opacity="0.85" />
+          <path d="M32 16c-4 0-6 3-6 6s2 6 6 6v6c-8 0-12-6-12-12s4-12 12-12v6z" fill="#0f172a" opacity="0.6" />
+        </svg>
+        <span>Qi Jingxuan</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/zh/about/">关于</a>
+        <a href="/zh/projects/" aria-current="page">项目</a>
+        <a href="/zh/publications/">论文</a>
+        <a href="/zh/contact/">联系</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="lang-toggle" href="/en/projects/sge/" aria-label="切换语言">EN</a>
+        <a class="icon-button" href="https://github.com/PatienceQi" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.19 1.78 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.88 10.88 0 0 1 2.87-.39c.97 0 1.95.13 2.87.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.42.36.77 1.06.77 2.14 0 1.55-.02 2.8-.02 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="hero fade-up">
+      <div class="container">
+        <h1>SGE：结构引导提取</h1>
+        <p class="tagline">面向GraphRAG的统计型表格忠实图谱构建，通过拓扑感知约束提取彻底消除结构盲区。</p>
+      </div>
+    </section>
+    <section class="fade-up delay-1">
+      <div class="container">
+        <h2 class="section-title">问题</h2>
+        <article>
+          <p>GraphRAG系统在处理CSV和表格数据时存在结构盲区。现有基于LLM的提取流水线将表格单元格视为自由文本，忽略了行列结构中隐含的关系拓扑——表头层级、合并单元格以及跨列约束。这导致幻觉边、断裂实体引用以及低保真知识图谱，严重损害下游图原生任务的性能。我们将其形式化为格式-约束耦合（FCC）问题：表格的结构格式隐式约束了哪些实体-关系三元组在语义上是合法的。</p>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up delay-2">
+      <div class="container">
+        <h2 class="section-title">方法</h2>
+        <article>
+          <p>SGE引入三阶段框架，将表格结构作为提取流水线的一等公民：</p>
+          <ol>
+            <li><strong>拓扑识别</strong>——检测结构原语：表头深度、跨行/列单元格、主轴方向与关系键。该阶段在任何NLP提取开始前生成带类型的模式骨架。</li>
+            <li><strong>模式归纳</strong>——从识别出的拓扑结构推断领域特定的实体-关系模式，将列角色映射为图节点/边类型，无需依赖自由形式提示。</li>
+            <li><strong>约束提取</strong>——在第一、二阶段导出的硬结构约束下执行LLM提取，阻止超出模式的三元组生成，并在所得图谱中强制执行引用完整性。</li>
+          </ol>
+          <p>该框架与系统无关，已在LightRAG与MS GraphRAG后端上通过Claude Haiku和GPT-4o-mini作为提取模型进行验证。我们发布了CSVFidelity-Bench：包含10个数据集、横跨3个领域（全球卫生、经济发展、临床记录），共977条金标准事实。</p>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up delay-3">
+      <div class="container">
+        <h2 class="section-title">结果</h2>
+        <article>
+          <table>
+            <thead>
+              <tr>
+                <th>数据集</th>
+                <th>SGE FC</th>
+                <th>基线 FC</th>
+                <th>提升倍数</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>世界卫生组织健康统计</td>
+                <td>1.000</td>
+                <td>0.167</td>
+                <td>6.0×</td>
+              </tr>
+              <tr>
+                <td>世界银行国家元数据</td>
+                <td>1.000</td>
+                <td>0.473</td>
+                <td>2.1×</td>
+              </tr>
+              <tr>
+                <td>住院费用</td>
+                <td>0.938</td>
+                <td>0.438</td>
+                <td>2.1×</td>
+              </tr>
+              <tr>
+                <td>财富500强</td>
+                <td>1.000</td>
+                <td>0.400</td>
+                <td>2.5×</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>SGE在全部9/9个可比数据集-模型组合中均取得有效提升。在图原生任务准确率上，SGE得分42/45，而基线仅为1/45——可回答查询数提升42倍。</p>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up">
+      <div class="container">
+        <h2 class="section-title">贡献</h2>
+        <article>
+          <ul>
+            <li>识别并形式化格式-约束耦合机制，作为GraphRAG在表格数据上保真度失效的根本原因。</li>
+            <li>设计SGE三阶段框架并在LightRAG与MS GraphRAG后端上完成实现。</li>
+            <li>构建CSVFidelity-Bench，包含10个数据集、3个领域的977条专家标注金标准事实。</li>
+            <li>使用Claude Haiku和GPT-4o-mini进行跨系统验证实验，目标投稿EMNLP 2026。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up">
+      <div class="container">
+        <h2 class="section-title">链接</h2>
+        <article class="publication-actions">
+          <a class="btn" href="https://github.com/PatienceQi/sge_lightrag" target="_blank" rel="noopener">GitHub</a>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container footer">
+      <span>© <span data-current-year></span> Qi Jingxuan</span>
+      <div class="nav-actions">
+        <a class="icon-button" href="https://github.com/PatienceQi" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.19 1.78 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.88 10.88 0 0 1 2.87-.39c.97 0 1.95.13 2.87.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.42.36.77 1.06.77 2.14 0 1.55-.02 2.8-.02 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <button class="back-to-top" type="button" aria-label="返回顶部">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 5 4 13h5v6h6v-6h5z"/></svg>
+  </button>
+  <script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>

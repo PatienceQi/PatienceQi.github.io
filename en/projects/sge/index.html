@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SGE: Faithful Graph Construction for GraphRAG | Projects | Qi Jingxuan</title>
+  <meta name="description" content="Explore Qi Jingxuan's SGE project — Structure-Guided Extraction for faithful graph construction from statistical tables in GraphRAG, achieving up to 6.0× fidelity improvement across 10 datasets and 977 gold-standard facts.">
+  <meta property="og:title" content="SGE: Faithful Graph Construction for GraphRAG">
+  <meta property="og:description" content="Explore Qi Jingxuan's SGE project — Structure-Guided Extraction for faithful graph construction from statistical tables in GraphRAG, achieving up to 6.0× fidelity improvement across 10 datasets and 977 gold-standard facts.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://example.com/en/projects/sge/">
+  <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/motion.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a class="logo" href="/en/" aria-label="Qi Jingxuan home">
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <rect width="48" height="48" rx="12" fill="url(#grad-sge-en)" />
+          <defs>
+            <linearGradient id="grad-sge-en" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#a78bfa" />
+              <stop offset="100%" stop-color="#7c3aed" />
+            </linearGradient>
+          </defs>
+          <path d="M16 32c8 0 12-6 12-12s-4-12-12-12v6c4 0 6 3 6 6s-2 6-6 6v6z" fill="#0f172a" opacity="0.85" />
+          <path d="M32 16c-4 0-6 3-6 6s2 6 6 6v6c-8 0-12-6-12-12s4-12 12-12v6z" fill="#0f172a" opacity="0.6" />
+        </svg>
+        <span>Qi Jingxuan</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/en/about/">About</a>
+        <a href="/en/projects/" aria-current="page">Projects</a>
+        <a href="/en/publications/">Publications</a>
+        <a href="/en/contact/">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="lang-toggle" href="/zh/projects/sge/" aria-label="Switch language">ZH</a>
+        <a class="icon-button" href="https://github.com/PatienceQi" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.19 1.78 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.88 10.88 0 0 1 2.87-.39c.97 0 1.95.13 2.87.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.42.36.77 1.06.77 2.14 0 1.55-.02 2.8-.02 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="hero fade-up">
+      <div class="container">
+        <h1>SGE: Structure-Guided Extraction</h1>
+        <p class="tagline">Faithful graph construction from statistical tables for GraphRAG, eliminating structural blindness through topology-aware constrained extraction.</p>
+      </div>
+    </section>
+    <section class="fade-up delay-1">
+      <div class="container">
+        <h2 class="section-title">Problem</h2>
+        <article>
+          <p>GraphRAG systems suffer from structural blindness when processing CSV and tabular data. Existing LLM-based extraction pipelines treat table cells as free text, ignoring the relational topology embedded in row/column structure — header hierarchies, merged cells, and cross-column constraints. This leads to hallucinated edges, broken entity references, and low-fidelity knowledge graphs that degrade downstream graph-native tasks. We formalize this as the Format-Constraint Coupling (FCC) problem: the structural format of a table implicitly constrains which entity-relation triples are semantically valid.</p>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up delay-2">
+      <div class="container">
+        <h2 class="section-title">Approach</h2>
+        <article>
+          <p>SGE introduces a 3-stage framework that makes table structure a first-class citizen in the extraction pipeline:</p>
+          <ol>
+            <li><strong>Topology Recognition</strong> — Detect structural primitives: header depth, spanning cells, pivot axes, and relational keys. This stage produces a typed schema skeleton before any NLP extraction begins.</li>
+            <li><strong>Schema Induction</strong> — Infer a domain-specific entity-relation schema from the recognized topology, mapping column roles to graph node/edge types without relying on free-form prompting.</li>
+            <li><strong>Constrained Extraction</strong> — Execute LLM extraction under hard structural constraints derived from stages 1 and 2, preventing out-of-schema triples and enforcing referential integrity across the resulting graph.</li>
+          </ol>
+          <p>The framework is system-agnostic and was validated on both LightRAG and MS GraphRAG backends using Claude Haiku and GPT-4o-mini as extraction models. We release CSVFidelity-Bench: 10 datasets across 3 domains (global health, economic development, clinical records) totaling 977 gold-standard facts.</p>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up delay-3">
+      <div class="container">
+        <h2 class="section-title">Results</h2>
+        <article>
+          <table>
+            <thead>
+              <tr>
+                <th>Dataset</th>
+                <th>SGE FC</th>
+                <th>Baseline FC</th>
+                <th>Improvement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>WHO Health Statistics</td>
+                <td>1.000</td>
+                <td>0.167</td>
+                <td>6.0×</td>
+              </tr>
+              <tr>
+                <td>World Bank Country Metadata</td>
+                <td>1.000</td>
+                <td>0.473</td>
+                <td>2.1×</td>
+              </tr>
+              <tr>
+                <td>Inpatient Charges</td>
+                <td>0.938</td>
+                <td>0.438</td>
+                <td>2.1×</td>
+              </tr>
+              <tr>
+                <td>Fortune 500</td>
+                <td>1.000</td>
+                <td>0.400</td>
+                <td>2.5×</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>SGE achieves valid improvements in all 9/9 comparable dataset-model pairs. On graph-native task accuracy, SGE scores 42/45 versus baseline 1/45 — a 42× improvement in answerable queries.</p>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up">
+      <div class="container">
+        <h2 class="section-title">Role</h2>
+        <article>
+          <ul>
+            <li>Identified and formalized the Format-Constraint Coupling mechanism as the root cause of GraphRAG fidelity failures on tabular data.</li>
+            <li>Designed the 3-stage SGE framework and implemented it across LightRAG and MS GraphRAG backends.</li>
+            <li>Constructed CSVFidelity-Bench with 977 expert-annotated gold-standard facts across 10 datasets and 3 domains.</li>
+            <li>Conducted cross-system validation experiments with Claude Haiku and GPT-4o-mini, targeting EMNLP 2026 submission.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <section class="fade-up">
+      <div class="container">
+        <h2 class="section-title">Links</h2>
+        <article class="publication-actions">
+          <a class="btn" href="https://github.com/PatienceQi/sge_lightrag" target="_blank" rel="noopener">GitHub</a>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container footer">
+      <span>© <span data-current-year></span> Qi Jingxuan</span>
+      <div class="nav-actions">
+        <a class="icon-button" href="https://github.com/PatienceQi" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.19 1.78 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.88 10.88 0 0 1 2.87-.39c.97 0 1.95.13 2.87.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.42.36.77 1.06.77 2.14 0 1.55-.02 2.8-.02 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <button class="back-to-top" type="button" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 5 4 13h5v6h6v-6h5z"/></svg>
+  </button>
+  <script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>
